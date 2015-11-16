@@ -16,55 +16,54 @@ the zipped dataset file.
 
 
 
-
-## Conventions followed
-
-Processing code and dataset variable naming follows the conventions described in 
-[Google R Styde Guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml).
+##Selected Features
 
 
-## Data sets
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
 
-### Raw data set
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
 
-The raw dataset was created using the following regular expression to filter out required
-features, eg. the measurements on the mean and standard deviation for each measurement
-from the original feature vector set 
+The reasoning behind my selection of features is that the assignment explicitly states "Extracts only the measurements on the mean and standard deviation for each measurement."
+To be complete, I included all variables having to do with mean or standard deviation.
 
-`-(mean|std)\\(`
+In short, for this derived dataset, these signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-This regular expression selects 66 features from the original data set.
-Combined with subject identifiers `subject` and activity labels `label`, this makes up the
-68 variables of the processed raw data set.
+* tBodyAcc-XYZ
+* tGravityAcc-XYZ
+* tBodyAccJerk-XYZ
+* tBodyGyro-XYZ
+* tBodyGyroJerk-XYZ
+* tBodyAccMag
+* tGravityAccMag
+* tBodyAccJerkMag
+* tBodyGyroMag
+* tBodyGyroJerkMag
+* fBodyAcc-XYZ
+* fBodyAccJerk-XYZ
+* fBodyGyro-XYZ
+* fBodyAccMag
+* fBodyAccJerkMag
+* fBodyGyroMag
+* fBodyGyroJerkMag
 
-The training and test subsets of the original dataset were combined to produce final raw dataset.
+The set of variables that were estimated (and kept for this assignment) from these signals are: 
 
+* mean(): Mean value
+* std(): Standard deviation
 
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
 
-### Tidy data set
+* gravityMean
+* tBodyAccMean
+* tBodyAccJerkMean
+* tBodyGyroMean
+* tBodyGyroJerkMean
 
-Tidy data set contains the average of all feature standard deviation and mean values of the raw dataset. 
-Original variable names were modified in the follonwing way:
+Other estimates have been removed for the purpose of this excercise.
 
- 1. Replaced `-mean` with `Mean`
- 2. Replaced `-std` with `Std`
- 3. Removed parenthesis `-()`
- 4. Replaced `BodyBody` with `Body`
+Note: features are normalized and bounded within [-1,1].
 
-It should be noted that the variable names are formatted in camelCase, as described in 
-[Google R Styde Guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml). 
-
-#### Sample of renamed variables compared to original variable name
-
- Raw data            | Tidy data 
- --------------------|--------------
- `subject`           | `subject`
- `label`             | `label`
- `tBodyAcc-mean()-X` | `tBodyAccMeanX`
- `tBodyAcc-mean()-Y` | `tBodyAccMeanY`
- `tBodyAcc-mean()-Z` | `tBodyAccMeanZ`
- `tBodyAcc-std()-X`  | `tBodyAccStdX`
- `tBodyAcc-std()-Y`  | `tBodyAccStdY`
- `tBodyAcc-std()-Z`  | `tBodyAccStdZ`
-
+The resulting variable names are of the following form: tbodyaccmeanx, which means the mean value of tBodyAcc-XYZ.
